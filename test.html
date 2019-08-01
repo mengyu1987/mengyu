@@ -5,19 +5,12 @@
       <title>WebSocket</title>
   </head>
   <body>
-  <a href="http://10.125.30.92/var/lib/docker/containers/77cba7b889644239fb2202733b4a84099b6348d3acac22183b085d03bcf0e64e/77cba7b889644239fb2202733b4a84099b6348d3acac22183b085d03bcf0e64e-json.log" download="test">
-              <el-button class = "button" size="medium" @click="saveInfo"  round>保存配信息至本地</el-button>
- </a>
- <a href="http://10.125.30.92/root/test.yaml" download="test">
-              <el-button class = "button" size="medium" @click="saveInfo"  round>保存2</el-button>
- </a>
-
       <h1>Echo Test</h1>
       <input type="text" id="sendTxt">
      <button id="sendBtn">发送</button>
      <div id="recv"></div>
      <script type="text/javascript">
-         var websocket = new WebSocket("ws://10.125.30.91/ws/sys/openshift/exec/api/v1/namespaces/default/pods/os-svcmgt-79d9x/exec?stdout=1&stdin=1&stderr=1&tty=1&container=os-svcmgt&command=%2Fbin%2Fsh&command=-i&command=-c&command=TERM%3Dxterm%20%2Fbin%2Fsh", ["base64.channel.k8s.io"]);
+         var websocket = new WebSocket("ws://{$ip}/ws/sys/openshift/exec/api/v1/namespaces/default/pods/os-svcmgt-79d9x/exec?stdout=1&stdin=1&stderr=1&tty=1&container=os-svcmgt&command=%2Fbin%2Fsh&command=-i&command=-c&command=TERM%3Dxterm%20%2Fbin%2Fsh", ["base64.channel.k8s.io"]);
          websocket.onopen = function(){
              console.log("websocket open");
              document.getElementById("recv").innerHTML = "Connected";
@@ -32,7 +25,7 @@
          document.getElementById("sendBtn").onclick = function(){
              var txt = document.getElementById("sendTxt").value;
              websocket.send("0" + window.btoa(txt));
-			 websocket.send("0" + "DQo=");
+             websocket.send("0" + "DQo=");//参考openshift-websocket：container-terminal.js
          }
  
      </script>
